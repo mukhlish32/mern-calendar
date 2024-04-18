@@ -66,37 +66,3 @@ exports.logoutUser = async (req, res) => {
         res.status(500).json({ message: 'Error: ', error });
     }
 };
-
-
-// Check auth user
-exports.hasAuth = async (req, res, next) => {
-    try {
-        const token = req.headers.authorization;
-
-        if (!token) {
-            return res.status(401).json({ message: 'Tidak ada token' });
-        }
-
-        const decodedToken = jwt.verify(token, jwtSecret);
-
-        if (!decodedToken || !decodedToken.userId) {
-            return res.status(401).json({ message: 'Token tidak valid' });
-        }
-
-        const userId = decodedToken.userId;
-        const user = await User.findById(userId);
-
-        if (!user) {
-            return res.status(401).json({ message: 'User tidak ditemukan' });
-        }
-
-        req.user = user;
-        next();
-    } catch (error) {
-        console.error('Error: ', error);
-        if (error.name === 'JsonWebTokenError') {
-            return res.status(401).json({ message: 'Token tidak valid' });
-        }
-        return res.status(500).json({ message: 'Error: ', error });
-    }
-};
