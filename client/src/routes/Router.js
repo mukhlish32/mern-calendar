@@ -11,21 +11,31 @@ const Dashboard = Loadable(lazy(() => import('../views/dashboard/Dashboard')))
 const Register = Loadable(lazy(() => import('../views/auth/Register')));
 const Login = Loadable(lazy(() => import('../views/auth/Login')));
 
+// Check Auth
+const AuthRoute = ({ element }) => {
+  const isAuthenticated = () => {
+    const token = localStorage.getItem('token');
+    return token ? true : false;
+  };
+
+  return isAuthenticated() ? element : <Navigate to="/login" />;
+};
+
 const Router = [
   {
     path: '/',
     element: <FullLayout />,
     children: [
-      { path: '/', element: <Navigate to="/auth/login" /> },
-      { path: '/dashboard', exact: true, element: <Dashboard /> },
+      { path: '/', element: <Navigate to="/dashboard" /> },
+      { path: '/dashboard', element: <AuthRoute element={<Dashboard />} /> },
     ],
   },
   {
-    path: '/auth',
+    path: '/',
     element: <BlankLayout />,
     children: [
-      { path: '/auth/register', element: <Register /> },
-      { path: '/auth/login', element: <Login /> },
+      { path: '/register', element: <Register /> },
+      { path: '/login', element: <Login /> },
     ],
   },
 ];

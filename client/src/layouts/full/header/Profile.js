@@ -1,27 +1,46 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import {
   Avatar,
   Box,
   Menu,
   Button,
   IconButton,
-  MenuItem,
-  ListItemIcon,
-  ListItemText
 } from '@mui/material';
-
-import { IconListCheck, IconMail, IconUser } from '@tabler/icons';
 
 import ProfileImg from 'src/assets/images/profile/user-1.jpg';
 
+const apiURL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 const Profile = () => {
   const [anchorEl2, setAnchorEl2] = useState(null);
+
   const handleClick2 = (event) => {
     setAnchorEl2(event.currentTarget);
   };
+
   const handleClose2 = () => {
     setAnchorEl2(null);
+  };
+
+  const handleLogout = async () => {
+    try {
+      const response = await fetch(`${apiURL}/auth/logout`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: JSON.stringify({ username: 'username' }),
+      });
+
+      if (response.ok) {
+        localStorage.removeItem('token');
+        window.location.href = '/login';
+      } else {
+        console.error('Error:', response.statusText);
+      }
+    } catch (err) {
+      console.error('Error: ', err);
+    }
   };
 
   return (
@@ -65,26 +84,8 @@ const Profile = () => {
           },
         }}
       >
-        <MenuItem>
-          <ListItemIcon>
-            <IconUser width={20} />
-          </ListItemIcon>
-          <ListItemText>My Profile</ListItemText>
-        </MenuItem>
-        <MenuItem>
-          <ListItemIcon>
-            <IconMail width={20} />
-          </ListItemIcon>
-          <ListItemText>My Account</ListItemText>
-        </MenuItem>
-        <MenuItem>
-          <ListItemIcon>
-            <IconListCheck width={20} />
-          </ListItemIcon>
-          <ListItemText>My Tasks</ListItemText>
-        </MenuItem>
         <Box mt={1} py={1} px={2}>
-          <Button to="/auth/login" variant="outlined" color="primary" component={Link} fullWidth>
+          <Button onClick={handleLogout} variant="outlined" color="primary" fullWidth>
             Logout
           </Button>
         </Box>

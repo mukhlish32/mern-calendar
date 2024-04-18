@@ -10,13 +10,15 @@ const Sidebar = (props) => {
 
   if (lgUp) {
     return (
-      // Sidebar for desktop
       <Box
         sx={{
           width: sidebarWidth,
           flexShrink: 0,
         }}
       >
+        {/* ------------------------------------------- */}
+        {/* Sidebar for desktop */}
+        {/* ------------------------------------------- */}
         <Drawer
           anchor="left"
           open={props.isSidebarOpen}
@@ -47,7 +49,6 @@ const Sidebar = (props) => {
   }
 
   return (
-    // Sidebar For Mobile
     <Drawer
       anchor="left"
       open={props.isMobileSidebarOpen}
@@ -60,6 +61,9 @@ const Sidebar = (props) => {
         },
       }}
     >
+      {/* ------------------------------------------- */}
+      {/* Sidebar For Mobile */}
+      {/* ------------------------------------------- */}
       <Stack justifyContent="space-between" direction="row" alignItems="center" my={2}></Stack>
       <Box display="flex" alignItems="center" justifyContent="center">
         <Logo />
