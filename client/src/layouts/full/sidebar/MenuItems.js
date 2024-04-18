@@ -20,9 +20,9 @@ const Menuitems = [
   },
   {
     id: uniqueId(),
-    title: 'Big Calendar',
+    title: 'Events',
     icon: IconCalendar,
-    href: '/ui/typography',
+    href: '/events',
   },
 ];
 

@@ -10,7 +10,7 @@ const BlankLayout = Loadable(lazy(() => import('../layouts/blank/BlankLayout')))
 const Dashboard = Loadable(lazy(() => import('../views/dashboard/Dashboard')))
 const Register = Loadable(lazy(() => import('../views/auth/Register')));
 const Login = Loadable(lazy(() => import('../views/auth/Login')));
-
+const Events = Loadable(lazy(() => import('../views/events/Events')))
 // Check Auth
 const AuthRoute = ({ element }) => {
   const isAuthenticated = () => {
@@ -28,6 +28,7 @@ const Router = [
     children: [
       { path: '/', element: <Navigate to="/dashboard" /> },
       { path: '/dashboard', element: <AuthRoute element={<Dashboard />} /> },
+      { path: '/events', element: <Events /> },
     ],
   },
   {
