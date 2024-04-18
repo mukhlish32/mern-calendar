@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const UserActivity = require('../models/UserActivity');
+const jwtSecret = process.env.JWT_SECRET || 'test'; 
 
 // Function to record user activity
 const logUserActivity = async (username, action) => {
@@ -42,7 +43,9 @@ exports.loginUser = async (req, res) => {
             return res.status(401).json({ message: 'Password tidak sesuai' });
         }
 
-        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
+        const token = jwt.sign({ userId: user._id }, jwtSecret);
+        
+        res.cookie('jwtToken', token, { maxAge: 86400 * 1000, httpOnly: true });
         await logUserActivity(username, 'login');
         res.status(200).json({ message: 'Login berhasil', token: token });
     } catch (error) {
@@ -54,13 +57,16 @@ exports.loginUser = async (req, res) => {
 // Logout user
 exports.logoutUser = async (req, res) => {
     try {
+        res.clearCookie('jwtToken');
         await logUserActivity(req.body.username, 'logout');
+        
         res.status(200).json({ message: 'Logout berhasil' });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Error: ', error });
     }
 };
+
 
 // Check auth user
 exports.hasAuth = async (req, res, next) => {
@@ -71,7 +77,12 @@ exports.hasAuth = async (req, res, next) => {
             return res.status(401).json({ message: 'Tidak ada token' });
         }
 
-        const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+        const decodedToken = jwt.verify(token, jwtSecret);
+
+        if (!decodedToken || !decodedToken.userId) {
+            return res.status(401).json({ message: 'Token tidak valid' });
+        }
+
         const userId = decodedToken.userId;
         const user = await User.findById(userId);
 
@@ -82,7 +93,10 @@ exports.hasAuth = async (req, res, next) => {
         req.user = user;
         next();
     } catch (error) {
-        console.error(error);
+        console.error('Error: ', error);
+        if (error.name === 'JsonWebTokenError') {
+            return res.status(401).json({ message: 'Token tidak valid' });
+        }
         return res.status(500).json({ message: 'Error: ', error });
     }
 };
