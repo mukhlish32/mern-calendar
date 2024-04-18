@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
@@ -8,27 +8,10 @@ import CreateModal from './Create';
 
 const localizer = momentLocalizer(moment);
 
-const events = [
-  {
-    email: 'agung@gmail.com',
-    date: new Date('2024-04-19T10:00:00'),
-    description: 'Meeting',
-  },
-  {
-    email: 'mukhlish.syarif@gmail.com',
-    date: new Date('2024-04-19T12:00:00'),
-    description: 'Lunch',
-  },
-];
-
-const CustomEvent = ({ event }) => (
-  <div>
-    <div>{event.email}</div>
-  </div>
-);
-
+const apiURL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 const Events = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [events, setEvents] = useState([]);
 
   const handleModalOpen = () => {
     setIsModalOpen(true);
@@ -36,7 +19,39 @@ const Events = () => {
 
   const handleModalClose = () => {
     setIsModalOpen(false);
+    getDataEvents();
   };
+
+  useEffect(() => {
+    getDataEvents();
+  }, []);
+
+  const getDataEvents = async () => {
+    try {
+      const response = await fetch(`${apiURL}/events`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `${localStorage.getItem('token')}`,
+        }
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data);
+      }
+
+      setEvents(data);
+    } catch (error) {
+      console.error('Error: ', error);
+    }
+  };
+
+  const CustomEvent = ({ event }) => (
+    <div>
+      <div>{event.email}</div>
+    </div>
+  );
 
   return (
     <PageContainer title="Index">
