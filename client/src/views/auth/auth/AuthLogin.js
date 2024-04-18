@@ -67,7 +67,7 @@ const AuthLogin = ({ title, subtitle, subtext }) => {
           <Stack justifyContent="space-between" direction="row" alignItems="center" my={2}>
             {error && (
               <Typography color="error" variant="body2">
-                {error}
+                Error: {error}
               </Typography>
             )}
           </Stack>

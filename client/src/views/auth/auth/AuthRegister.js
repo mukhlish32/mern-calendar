@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Typography, Button } from '@mui/material';
 import CustomTextField from '../../../components/forms/theme-elements/CustomTextField';
 import { Stack } from '@mui/system';
+import Swal from 'sweetalert2';
 
 const apiURL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 const AuthRegister = ({ title, subtitle, subtext }) => {
@@ -27,6 +28,12 @@ const AuthRegister = ({ title, subtitle, subtext }) => {
       if (!response.ok) {
         setError(data.message);
       } else {
+        Swal.fire({
+          icon: 'success',
+          title: 'User berhasil disimpan',
+          showConfirmButton: false,
+          timer: 1500
+        });
         setUsername('');
         setEmail('');
         setPassword('');
@@ -61,7 +68,7 @@ const AuthRegister = ({ title, subtitle, subtext }) => {
         </Stack>
         {error && (
           <Typography color="error" variant="body2" mb={2}>
-            {error}
+            Error: {error}
           </Typography>
         )}
         <Button color="primary" variant="contained" size="large" fullWidth type="submit">
