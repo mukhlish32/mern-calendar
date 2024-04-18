@@ -33,6 +33,7 @@ const AuthLogin = ({ title, subtitle, subtext }) => {
       } else {
         const token = data.token;
         localStorage.setItem('token', token);
+        localStorage.setItem('user', username);
 
         window.location.href = '/dashboard';
       }

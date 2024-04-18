@@ -22,6 +22,7 @@ const Profile = () => {
   };
 
   const handleLogout = async () => {
+    const username = localStorage.getItem('user');
     try {
       const response = await fetch(`${apiURL}/auth/logout`, {
         method: 'POST',
@@ -29,11 +30,12 @@ const Profile = () => {
           'Content-Type': 'application/json',
           Authorization: `${localStorage.getItem('token')}`,
         },
-        body: JSON.stringify({ username: 'username' }),
+        body: JSON.stringify({ username: username }),
       });
 
       if (response.ok) {
         localStorage.removeItem('token');
+        localStorage.removeItem('user');
         window.location.href = '/login';
       } else {
         console.error('Error:', response.statusText);
