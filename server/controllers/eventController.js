@@ -1,4 +1,5 @@
 const Event = require('../models/Event');
+const sendEmailHandler = require("../services/emailService");
 
 // Create event
 exports.createEvent = async (req, res) => {
@@ -6,6 +7,10 @@ exports.createEvent = async (req, res) => {
         const { email, date, description } = req.body;
         const event = new Event({ email, date, description });
         await event.save();
+
+        // Send email
+        const content = 'Hi Salam kenal'
+        await sendEmailHandler(email, content, content);
         res.status(201).json(event);
     } catch (err) {
         res.status(500).json({ message: err.message });
