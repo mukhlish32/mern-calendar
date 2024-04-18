@@ -1,0 +1,42 @@
+{
+    "_id" : ObjectId("6621601392f8e9aa47ee2a90"),
+    "username" : "admin",
+    "timestamp" : ISODate("2024-04-18T18:01:55.063+0000"),
+    "action" : "login",
+    "__v" : NumberInt(0)
+}
+{
+    "_id" : ObjectId("6621602c92f8e9aa47ee2a92"),
+    "username" : "username",
+    "timestamp" : ISODate("2024-04-18T18:02:20.632+0000"),
+    "action" : "logout",
+    "__v" : NumberInt(0)
+}
+{
+    "_id" : ObjectId("6621602f92f8e9aa47ee2a95"),
+    "username" : "admin",
+    "timestamp" : ISODate("2024-04-18T18:02:23.690+0000"),
+    "action" : "login",
+    "__v" : NumberInt(0)
+}
+{
+    "_id" : ObjectId("662161fc92f8e9aa47ee2a99"),
+    "username" : "admin",
+    "timestamp" : ISODate("2024-04-18T18:10:04.928+0000"),
+    "action" : "login",
+    "__v" : NumberInt(0)
+}
+{
+    "_id" : ObjectId("6621620492f8e9aa47ee2a9b"),
+    "username" : "admin",
+    "timestamp" : ISODate("2024-04-18T18:10:12.119+0000"),
+    "action" : "logout",
+    "__v" : NumberInt(0)
+}
+{
+    "_id" : ObjectId("662162ab92f8e9aa47ee2a9e"),
+    "username" : "admin",
+    "timestamp" : ISODate("2024-04-18T18:12:59.127+0000"),
+    "action" : "login",
+    "__v" : NumberInt(0)
+}

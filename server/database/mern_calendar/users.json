@@ -1,0 +1,14 @@
+{
+    "_id" : ObjectId("6620cdd4cd2651a509c81361"),
+    "username" : "admin",
+    "email" : "admin@admin.com",
+    "password" : "$2b$10$UhoJhJN8VkjYEOS33jbJIevL92WkXvelMTL7MMUsMebS.71uIn10y",
+    "__v" : NumberInt(0)
+}
+{
+    "_id" : ObjectId("6620d717fc6c63c01d42a115"),
+    "username" : "user",
+    "email" : "user@mail.com",
+    "password" : "$2b$10$AUEwGhhrbRQW52h6LvFkVe0kZEGAFGPdGtWLMW4oMD49Dkj62zImO",
+    "__v" : NumberInt(0)
+}
