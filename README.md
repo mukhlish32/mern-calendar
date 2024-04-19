@@ -41,7 +41,7 @@ Clone the repository:
 
 3. Create a copy of the `.env.example` file and rename it to `.env`. Update the database configuration according to your setup in the `DB_SETTING` environment variable.
 
-4. Export the MongoDB database from the `database` folder. You can use Studio 3T to set up the database.
+4. Import the MongoDB database from the `database` folder. You can use Studio 3T to set up the database.
 
 5. Set up your email host in the `.env` file to enable email notifications.
 
@@ -67,14 +67,12 @@ Clone the repository:
 
 3. Create a copy of the `.env.example` file and rename it to `.env`.
 
-4. Import the MongoDB database from the `database` folder. You can use Studio 3T to set up the database.
-
-5. To start the server, run the following command:
+4. To start the client, run the following command:
 
    ```bash
    npm start
    ```
-6. You can now access the website at http://localhost:3000 in your web browser.
+5. You can now access the website at http://localhost:3000 in your web browser.
 
 
 ## Screenshot
