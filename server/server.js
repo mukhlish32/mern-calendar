@@ -18,7 +18,7 @@ app.use(cookieParser());
 app.use(cors());
 
 // Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/mern_calendar');
+mongoose.connect(process.env.DB_SETTING);
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'Database error:'));
 db.once('open', () => {

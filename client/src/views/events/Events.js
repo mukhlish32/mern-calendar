@@ -41,15 +41,28 @@ const Events = () => {
         throw new Error(data);
       }
 
-      setEvents(data);
+      const parsedEvents = data.map(event => ({
+        ...event,
+        start: new Date(event.date),
+        end: new Date(event.date),
+      }));
+
+      setEvents(parsedEvents);
     } catch (error) {
       console.error('Error: ', error);
     }
   };
 
-  const CustomEvent = ({ event }) => (
+  const customEvent = ({ event }) => (
     <div>
       <div>{event.email}</div>
+    </div>
+  );
+
+  const customAgenda = ({ event }) => (
+    <div>
+      <div>{event.email}</div>
+      <div>{event.description}</div>
     </div>
   );
 
@@ -80,10 +93,11 @@ const Events = () => {
         <Calendar
           localizer={localizer}
           events={events}
-          startAccessor="date"
-          endAccessor="date"
           components={{
-            event: CustomEvent
+            event: customEvent,
+            agenda: {
+              event: customAgenda
+            }
           }}
         />
       </Box>
