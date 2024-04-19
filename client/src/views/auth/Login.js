@@ -54,7 +54,7 @@ const Login2 = () => {
                     </Typography>
                     <Typography
                       component={Link}
-                      to="/auth/register"
+                      to="/register"
                       fontWeight="500"
                       sx={{
                         textDecoration: 'none',
