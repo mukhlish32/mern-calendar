@@ -15,74 +15,93 @@ The MERN Calendar Events project is a full-stack web application built using the
 
 ## Technologies Used
 
-- **Frontend**: React.js, Material-UI, React Big Calendar
+- **Frontend**: React.js (18.2.0), Material-UI, React Big Calendar
 - **Backend**: Node.js (v20.12.0), Express.js (4.19.2)
 - **Database**: MongoDB (7.0.8)
 - **Authentication**: JSON Web Tokens (JWT)
 
 ## Installing & Running the Application
-
-1. Clone the repository:
+Clone the repository:
 
    ```bash
    git clone https://github.com/mukhlish32/mern-calendar
    ```
 ### Server
-- Change into the server project directory:
+1. Change into the server project directory:
 
    ```bash
    cd server
    ```
 
-- Install dependencies:
+2. Install dependencies:
 
    ```bash
    npm install
    ```
 
-- Create a copy of the `.env.example` file and rename it to `.env`. Update the database configuration according to your setup in the `DB_SETTING` environment variable.
+3. Create a copy of the `.env.example` file and rename it to `.env`. Update the database configuration according to your setup in the `DB_SETTING` environment variable.
 
-- Export the MongoDB database from the `database` folder. You can use Studio 3T to set up the database.
+4. Export the MongoDB database from the `database` folder. You can use Studio 3T to set up the database.
 
-- Set up your email host in the `.env` file to enable email notifications.
+5. Set up your email host in the `.env` file to enable email notifications.
 
-- To start the server, run the following command:
+6. To start the server, run the following command:
 
    ```bash
    node server.js
    ```
-- You can now access the api server side at http://localhost:5000.
+7. You can now access the api server side at http://localhost:5000.
 
 ### Client
-- Change into the client project directory:
+1. Change into the client project directory:
 
    ```bash
    cd client
    ```
 
-- Install dependencies:
+2. Install dependencies:
 
    ```bash
    npm install
    ```
 
-- Create a copy of the `.env.example` file and rename it to `.env`.
+3. Create a copy of the `.env.example` file and rename it to `.env`.
 
-- Export the MongoDB database from the `database` folder. You can use Studio 3T to set up the database.
+4. Export the MongoDB database from the `database` folder. You can use Studio 3T to set up the database.
 
-- To start the server, run the following command:
+5. To start the server, run the following command:
 
    ```bash
    npm start
    ```
-- You can now access the website at http://localhost:3000 in your web browser.
+6. You can now access the website at http://localhost:3000 in your web browser.
 
 
 ## Screenshot
 
-- **Login Page**
-- **Event Page**
-- **Email Notification**
+1. **Login Page**
+
+![image](https://github.com/mukhlish32/mern-calendar/assets/85531251/2ca53c5f-5bb7-4210-b336-c2b578ced587)
+
+
+3. **Register Page**
+
+]![image](https://github.com/mukhlish32/mern-calendar/assets/85531251/5b612c10-fcfd-4702-90a3-efd528e0fc84)
+
+
+4. **Event Page**
+
+![image](https://github.com/mukhlish32/mern-calendar/assets/85531251/3bb9113a-a0e4-4210-8d87-98f6f28a7da6)
+
+
+5. **Event Page: Create Modal**
+
+![image](https://github.com/mukhlish32/mern-calendar/assets/85531251/f1c61072-aacd-4735-aaa1-e76ec1844f0f)
+
+
+6. **Email Notification**
+
+![image](https://github.com/mukhlish32/mern-calendar/assets/85531251/35708abf-7ae4-4dba-9ae2-435132d425a7)
 
 # Author
 - Muhammad Mukhlish Syarif
