@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const UserActivity = require('../models/UserActivity');
-const jwtSecret = process.env.JWT_SECRET || 'test'; 
+const jwtSecret = process.env.JWT_SECRET || 'test';
 
 // Function to record user activity
 const logUserActivity = async (username, action) => {
@@ -17,14 +17,43 @@ const logUserActivity = async (username, action) => {
 // Register user
 exports.registerUser = async (req, res) => {
     try {
-        const { username, email, password } = req.body;
+        const { username, email, password, name, address, phone } = req.body;
         const encryptedPass = await bcrypt.hash(password, 10);
-        const user = new User({ username, email, password: encryptedPass });
+
+        // set verificationCode
+        const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
+        const user = new User({ 
+            username, email, password: encryptedPass, name, address, phone, verificationCode 
+        });
+
         await user.save();
+        sendVerificationEmail(email, verificationCode);
+
         await logUserActivity(username, 'register');
-        res.status(201).json({ message: 'User berhasil terdaftar' });
+        res.status(201).json({ message: 'User berhasil terdaftar, harap lakukan verifikasi dahulu' });
     } catch (error) {
         console.error(error);
+        res.status(500).json({ message: 'Error: ', error });
+    }
+};
+
+// Verifikasi user
+exports.verifyEmail = async (req, res) => {
+    const { code } = req.body;
+    try {
+        const user = await User.findOne({ verificationCode: code });
+        if (!user) {
+            return res.status(400).json({ message: 'Kode Verifikasi Invalid' });
+        }
+
+        user.verified = true;
+        user.verifiedAt = new Date();
+        user.verificationCode = null;
+        await user.save();
+
+        await logUserActivity(username, 'verified');
+        res.status(200).json({ message: 'Verifikasi berhasil' });
+    } catch (error) {
         res.status(500).json({ message: 'Error: ', error });
     }
 };
@@ -32,8 +61,8 @@ exports.registerUser = async (req, res) => {
 // Login user
 exports.loginUser = async (req, res) => {
     try {
-        const { username, password } = req.body;
-        const user = await User.findOne({ username });
+        const { email, password } = req.body;
+        const user = await User.findOne({ email });
         if (!user) {
             return res.status(401).json({ message: 'User tidak ditemukan' });
         }
@@ -43,9 +72,14 @@ exports.loginUser = async (req, res) => {
             return res.status(401).json({ message: 'Password tidak sesuai' });
         }
 
+        if (!user.verified) {
+            return res.status(400).json({ message: 'Email belum verifikasi' });
+        }
+
         const token = jwt.sign({ userId: user._id }, jwtSecret);
-        
+
         res.cookie('jwtToken', token, { maxAge: 86400 * 1000, httpOnly: true });
+
         await logUserActivity(username, 'login');
         res.status(200).json({ message: 'Login berhasil', token: token });
     } catch (error) {
@@ -59,7 +93,7 @@ exports.logoutUser = async (req, res) => {
     try {
         res.clearCookie('jwtToken');
         await logUserActivity(req.body.username, 'logout');
-        
+
         res.status(200).json({ message: 'Logout berhasil' });
     } catch (error) {
         console.error(error);
